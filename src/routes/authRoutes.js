@@ -12,7 +12,7 @@ router.post('/signup', async(req, res) => {
         const user = new User({ email, password, number })
         await user.save()
 
-        const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY')
+        const token = jwt.sign({ userId: user._id, userNumber: user.number }, 'MY_SECRET_KEY')
         res.send({ token })
     } catch (err) {
         return res.status(422).send(err.message)
@@ -33,8 +33,8 @@ router.post('/signin', async(req, res) => {
 
     try {
         await user.comparePassword(password)
-        const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY')
-        res.send({ token, number: user.number })
+        const token = jwt.sign({ userId: user._id, userNumber: user.number }, 'MY_SECRET_KEY')
+        res.send({ token })
     } catch (err) {
         return res.status(422).send({ error: 'Invalid password or email' })
     }
