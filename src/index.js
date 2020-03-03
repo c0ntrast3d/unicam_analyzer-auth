@@ -10,7 +10,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(authRoutes)
 
-const mongoUri = 'mongodb+srv://analyzer-admin:rK3xiNIQIzMmhHsp@cluster0-cmaxz.azure.mongodb.net/test?retryWrites=true&w=majority'
+const mongoUri = process.env.MONGO_URI
 if (!mongoUri) {
     throw new Error(
         'Missing serverString'
